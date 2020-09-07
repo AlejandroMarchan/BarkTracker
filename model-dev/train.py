@@ -132,7 +132,7 @@ model.add(keras.layers.Dense(2, activation='tanh'))
 opt = keras.optimizers.Adam(learning_rate=0.001)
 
 model.compile(optimizer=opt,
-              loss='binary_crossentropy',
+              loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 
 filepath = "RNN_Final-{epoch:02d}-{val_acc:.3f}"  # unique file name that will include the epoch and the validation acc for that epoch

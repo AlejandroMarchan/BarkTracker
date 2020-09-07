@@ -52,7 +52,7 @@ for i in range(layer_number-1):
 model.add(keras.layers.Dense(2, activation='tanh'))
 
 model.compile(optimizer=opt,
-              loss='sparse_categorical_crossentropy',
+              loss='binary_crossentropy',
               metrics=['accuracy'])
 
 # Load the previously saved weights

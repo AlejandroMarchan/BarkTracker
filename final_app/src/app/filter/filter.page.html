@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Filter</ion-title>
+    <ion-buttons slot="end">
+      <ion-icon style="margin-right: 13px;" class="icono-header" name="close-outline" routerLink="/record" routerDirection="backward"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="titulo">
+    <p>Date Range</p>
+  </div>
+  <ion-item>
+    <ion-label position="fixed">Starting date</ion-label>
+    <ion-input type="date" [required]="end_date" [(ngModel)]="start_date"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="fixed">Ending date</ion-label>
+    <ion-input type="date" [required]="start_date" [(ngModel)]="end_date"></ion-input>
+  </ion-item>
+
+  <div class="titulo">
+    <p>Time Range</p>
+  </div>
+  <ion-item>
+    <ion-label position="fixed">Starting time</ion-label>
+    <ion-input type="time" [required]="end_time" [(ngModel)]="start_time" step="1"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="fixed">Ending time</ion-label>
+    <ion-input type="time" [required]="start_time" [(ngModel)]="end_time" step="1"></ion-input>
+  </ion-item>
+
+  <div class="titulo">
+    <p>Duration Range (in seconds)</p>
+  </div>
+  <ion-item>
+    <ion-label position="fixed">Min. duration</ion-label>
+    <ion-input type="number" [(ngModel)]="min_dur" min="0"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="fixed">Max. duration</ion-label>
+    <ion-input type="number" [(ngModel)]="max_dur" min="0"></ion-input>
+  </ion-item>
+
+  <!-- [disabled]="(start_date && !end_date) || (!start_date && end_date) || (start_time && !end_time) || (!start_time && end_time)" -->
+  <ion-button  expand="block" (click)="filter()">FILTER</ion-button>
+</ion-content>

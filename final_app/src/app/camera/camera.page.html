@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-icon class="icono-header" name="arrow-back" routerLink="/" routerDirection="root"></ion-icon>
+    </ion-buttons>
+    <ion-title>Camera</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <video id="remoteVideo" autoplay controls></video>
+
+  <!-- <ion-item>
+    <ion-label position="floating">Enter a valid web socket</ion-label>
+    <ion-input type="text" [(ngModel)]="url"></ion-input>
+  </ion-item> -->
+
+  <ion-button expand="full" color="success" (click)="websocketEvents()">Start</ion-button>
+  <ion-button expand="full" color="danger" (click)="hangup()">Stop</ion-button>
+
+</ion-content>

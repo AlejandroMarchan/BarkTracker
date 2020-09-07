@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar class="bg-color">
+    <ion-title class="titulo">
+      <ion-icon name="analytics-outline"></ion-icon>
+      BarkTracker
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <ion-row>
+      <ion-col col-auto>
+        <ion-card class="tarjeta" routerLink="/record" routerDirection="forward">
+          <h3>Bark Record</h3>
+          <ion-icon class="icono" name="list-outline"></ion-icon>
+        </ion-card>
+      </ion-col>
+      <ion-col col-auto>
+        <ion-card class="tarjeta" routerLink="/camera" routerDirection="forward">
+          <h3>Camera</h3>
+          <ion-icon class="icono" name="videocam-outline"></ion-icon>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-auto>
+        <ion-card class="tarjeta" routerLink="/settings" routerDirection="forward">
+          <h3>Settings</h3>
+          <ion-icon class="icono" name="settings-outline"></ion-icon>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-icon class="icono-header" name="arrow-back" routerLink="/" routerDirection="root"></ion-icon>
+    </ion-buttons>
+    <ion-title>Settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="titulo">
+    <p>GLOBAL</p>
+  </div>
+  <ion-item>
+    <ion-label position="floating">Raspberry Pi's IP</ion-label>
+    <ion-input required type="text" [(ngModel)]="ip" pattern="^((25[0-5]|(2[0-4]|1[0-9]|[1-9]|)[0-9])(\.(?!$)|$)){4}$"></ion-input>
+  </ion-item>
+  <div class="titulo">
+    <p>SERVER</p>
+  </div>
+  <ion-item>
+    <ion-label position="floating">User</ion-label>
+    <ion-input required type="text" [(ngModel)]="server_user"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Password</ion-label>
+    <ion-input required type="password" [(ngModel)]="server_password"></ion-input>
+  </ion-item>
+  <div class="titulo">
+    <p>CAMERA</p>
+  </div>
+  <ion-item>
+    <ion-label position="floating">User</ion-label>
+    <ion-input type="text" [(ngModel)]="camera_user"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Password</ion-label>
+    <ion-input type="password" [(ngModel)]="camera_password"></ion-input>
+  </ion-item>
+  <div class="titulo">
+    <p>SONG AUTOPLAY</p>
+  </div>
+  <ion-item>
+    <ion-label position="floating">Choose a song</ion-label>
+    <ion-input name="song" (change)="getSong($event)" type="file" placeholder="Choose a song" [(ngModel)]="song" accept="audio/mpeg"></ion-input>
+  </ion-item>
+  <!-- <ion-item *ngIf="song">
+    <audio controls>
+      <source [src]="song" type="audio/mpeg">
+    Your browser does not support the audio element.
+    </audio>
+  </ion-item> -->
+  <ion-item>
+    <ion-label>Enable/disable song autoplay</ion-label>
+    <ion-toggle [(ngModel)]="song_autoplay"></ion-toggle>
+  </ion-item>
+
+  <ion-button [disabled]="!ip || !server_user || !server_password" expand="block" (click)="save_settings()">SAVE SETTINGS</ion-button>
+</ion-content>

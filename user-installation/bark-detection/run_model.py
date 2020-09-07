@@ -40,7 +40,7 @@ epochs = 10
 opt = keras.optimizers.Adam(learning_rate=0.001, decay=1e-6)
 
 model = keras.Sequential()
-model.add(keras.layers.Dense(layer_size, input_shape=(features.shape[1:]), activation='relu'))
+model.add(keras.layers.Dense(layer_size, input_shape=((161,)), activation='relu'))
 model.add(keras.layers.Dropout(0.2))
 model.add(keras.layers.BatchNormalization())
 

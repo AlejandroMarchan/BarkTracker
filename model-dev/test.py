@@ -26,13 +26,12 @@ def extract_features():
     return features
 
 # Create a new model instance
-try:
-    sc = load('std_scaler.bin')
-except:
-    features = np.load('features.npy')
-    sc = StandardScaler()
-    sc.fit(features)
-    dump(sc, 'std_scaler.bin', compress=True)
+features = np.load('features.npy')
+sc = StandardScaler()
+sc.fit(features)
+
+print(features.shape[1:])
+exit()
 
 layer_size = 128
 layer_number = 2

@@ -54,7 +54,7 @@ export class RecordPage implements OnInit {
         'Authorization': 'Basic ' + btoa(this.databaseService.data.server_user + ':' + this.databaseService.data.server_password)
       })
     };
-    this.http.get<any>('http://' + this.databaseService.data.ip + '/barks.json', httpOptions).subscribe(data => {
+    this.http.get<any>('http://' + this.databaseService.data.ip + ':8333/barks.json', httpOptions).subscribe(data => {
       console.log(data);
       let prevDate: Date = null;
       let newDay: boolean = false;
@@ -63,7 +63,7 @@ export class RecordPage implements OnInit {
         if(prevDate && prevDate.getDate() != fecha.getDate()){
           newDay = true;
           console.log('newday');
-          
+
         }
         this.bark_data.push({'duration': elem.duration, 'date': fecha, 'newDay': newDay});
         prevDate = fecha;
@@ -101,7 +101,7 @@ export class RecordPage implements OnInit {
       }).slice();
     }
     console.log(this.bark_data);
-    
+
   }
 
   navigateFilter(){

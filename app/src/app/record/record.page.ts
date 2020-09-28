@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
+import { DatabaseService } from '../services/database.service';
 
 @Component({
   selector: 'app-record',
@@ -31,7 +32,7 @@ export class RecordPage implements OnInit {
     'max_dur': null
   };
 
-  constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private databaseService: DatabaseService,private router: Router, private http: HttpClient, private route: ActivatedRoute) {
     route.params.subscribe(params => {
       console.log('params', params);
       if(Object.keys(params).length != 0){
@@ -50,10 +51,10 @@ export class RecordPage implements OnInit {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
-        'Authorization': 'Basic ' + btoa('admin:hola12')
+        'Authorization': 'Basic ' + btoa(this.databaseService.data.server_user + ':' + this.databaseService.data.server_password)
       })
     };
-    this.http.get<any>('http://192.168.0.29:8333/barks.json', httpOptions).subscribe(data => {
+    this.http.get<any>('http://' + this.databaseService.data.ip + '/barks.json', httpOptions).subscribe(data => {
       console.log(data);
       let prevDate: Date = null;
       let newDay: boolean = false;

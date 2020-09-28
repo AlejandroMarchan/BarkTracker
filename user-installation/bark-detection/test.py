@@ -9,7 +9,7 @@ def store_time(date, final_time):
     with open('server/barks.json', 'r') as json_file:
         data = json.load(json_file)
     with open('server/barks.json', 'w') as json_file:
-        data.append({ 'duration': date, 'date': final_time })
+        data.append({ 'duration': final_time, 'date': date })
         json.dump(data, json_file)
 
 # start_time = datetime.now()

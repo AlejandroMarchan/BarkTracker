@@ -6,7 +6,7 @@
     <ion-title>Bark record</ion-title>
     <ion-buttons slot="end">
       <ion-icon class="icono-header filtro" name="filter-outline" routerLink="/filter" routerDirection="forward"></ion-icon>
-      <span style="margin-right: 20px;" class="text"  name="filter-outline" routerLink="/filter" routerDirection="forward">Filter</span>
+      <span style="margin-right: 20px;" class="text"  name="filter-outline" (click)="navigateFilter()">Filter</span>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -16,66 +16,22 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   
-  <ion-card style="margin-bottom: 30px;" color="primary">
-    <ion-item>
-      <ion-icon name="paw-outline" slot="start"></ion-icon>
-      <ion-label style="margin-left: 45px;">07/09/2020  -  13:22:46</ion-label>
-    </ion-item>
-  
-    <ion-card-content style="text-align: center; font-weight: bold;">
-      Duration: 14 seconds
-    </ion-card-content>
-  </ion-card>
-  <ion-card class="new_day" style="margin-bottom: 30px;">
-    <ion-card-content style="font-size: 20px;">
-      <ion-icon style="margin-right: 10px;" name="today-outline"></ion-icon>
-      <ion-label>NEW DAY</ion-label> 
-    </ion-card-content>
-  </ion-card>
-  <ion-card style="margin-bottom: 30px;" color="primary">
-    <ion-item>
-      <ion-icon name="paw-outline" slot="start"></ion-icon>
-      <ion-label style="margin-left: 45px;">06/08/2020  -  12:17:03</ion-label>
-    </ion-item>
-  
-    <ion-card-content style="text-align: center; font-weight: bold;">
-      Duration: 11 seconds
-    </ion-card-content>
-  </ion-card>
-  <ion-card style="margin-bottom: 30px;" color="primary">
-    <ion-item>
-      <ion-icon name="paw-outline" slot="start"></ion-icon>
-      <ion-label style="margin-left: 45px;">06/08/2020  -  09:16:09</ion-label>
-    </ion-item>
-  
-    <ion-card-content style="text-align: center; font-weight: bold;">
-      Duration: 18 seconds
-    </ion-card-content>
-  </ion-card>
-  <ion-card class="new_day" style="margin-bottom: 30px;">
-    <ion-card-content style="font-size: 20px;">
-      <ion-icon style="margin-right: 10px;" name="today-outline"></ion-icon>
-      <ion-label>NEW DAY</ion-label> 
-    </ion-card-content>
-  </ion-card>
-  <ion-card style="margin-bottom: 30px;" color="primary">
-    <ion-item>
-      <ion-icon name="paw-outline"></ion-icon>
-      <ion-label style="margin-left: 45px;">05/08/2020  -  21:43:55</ion-label>
-    </ion-item>
-  
-    <ion-card-content style="text-align: center; font-weight: bold;">
-      Duration: 25 seconds
-    </ion-card-content>
-  </ion-card>
-  <ion-card style="margin-bottom: 30px;" color="primary">
-    <ion-item>
-      <ion-icon name="paw-outline" slot="start"></ion-icon>
-      <ion-label style="margin-left: 45px;">05/08/2020  -  15:27:12</ion-label>
-    </ion-item>
-  
-    <ion-card-content style="text-align: center; font-weight: bold;">
-      Duration: 35 seconds
-    </ion-card-content>
-  </ion-card>
+  <div *ngFor="let bark of bark_data">
+    <ion-card *ngIf="bark.newDay" class="new_day" style="margin-bottom: 30px;">
+      <ion-card-content style="font-size: 20px;">
+        <ion-icon style="margin-right: 10px;" name="today-outline"></ion-icon>
+        <ion-label>NEW DAY</ion-label> 
+      </ion-card-content>
+    </ion-card>
+    <ion-card style="margin-bottom: 30px;" color="primary">
+      <ion-item>
+        <ion-icon name="paw-outline" slot="start"></ion-icon>
+        <ion-label style="margin-left: 45px;">{{ parseDate(bark.date) }}</ion-label>
+      </ion-item>
+    
+      <ion-card-content style="text-align: center; font-weight: bold;">
+        Duration: {{ bark.duration }} seconds
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

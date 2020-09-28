@@ -11,13 +11,13 @@
   <ion-grid>
     <ion-row>
       <ion-col col-auto>
-        <ion-card class="tarjeta" routerLink="/record" routerDirection="forward">
+        <ion-card class="tarjeta" (click)="bark_record()">
           <h3>Bark Record</h3>
           <ion-icon class="icono" name="list-outline"></ion-icon>
         </ion-card>
       </ion-col>
       <ion-col col-auto>
-        <ion-card class="tarjeta" routerLink="/camera" routerDirection="forward">
+        <ion-card class="tarjeta" (click)="camera()">
           <h3>Camera</h3>
           <ion-icon class="icono" name="videocam-outline"></ion-icon>
         </ion-card>

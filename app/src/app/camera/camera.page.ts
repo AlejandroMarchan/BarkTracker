@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import { DatabaseService } from '../services/database.service';
 
 const ICE_SERVERS: RTCIceServer[] = [
   {urls: ['stun:stun.example.com', 'stun:stun-1.example.com']},
@@ -19,10 +20,12 @@ export class CameraPage {
   
   private pc: RTCPeerConnection;
   private dataChannel: RTCDataChannel;
-  private url: string = 'wss://admin:Dylan4Life@192.168.0.18:4200/stream/webrtc';
+  private url: string = '';
   private ws: WebSocket;
 
-  constructor () { }
+  constructor (private datatabaseService: DatabaseService) {
+    this.url = 'wss://' + this.datatabaseService.data.camera_user + ':' + this.datatabaseService.data.camera_password + '@' + this.datatabaseService.data.ip + ':4200/stream/webrtc';
+  }
 
   async hangup() {
     var request = {

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { DatabaseService } from '../services/database.service';
+import { NavController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-settings',
@@ -7,15 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsPage implements OnInit {
 
-  private ip: string = '192.168.0.18';
-  private server_user: string = 'server admin';
-  private server_password: string = 'test server';
-  private camera_user: string = 'camera admin';
-  private camera_password: string = 'test camera';
-  private song:string = '';
-  private song_autoplay: boolean = false;
-
-  constructor() { }
+  constructor(public navCtrl: NavController, public toastController: ToastController, private databaseService: DatabaseService) { }
 
   ngOnInit() {
   }
@@ -34,7 +28,7 @@ export class SettingsPage implements OnInit {
       console.log(blob);
       
       // create blobURL, such that we could use it in an image element:
-      this.song = URL.createObjectURL(blob);
+      this.databaseService.data.song = URL.createObjectURL(blob);
 
     };
 
@@ -45,8 +39,36 @@ export class SettingsPage implements OnInit {
     };
   }
 
-  save_settings() {
-    console.log(this.song);
+  async atras() {
+    if((await this.databaseService.check_changes().then()).valueOf()){
+      const toast = await this.toastController.create({
+        header: 'Unsaved changes',
+        message: 'Do you want to exit?',
+        position: 'middle',
+        buttons: [
+          {
+            text: 'Exit',
+            handler: () => {
+              this.navCtrl.navigateRoot('/');
+            }
+          }, {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              
+            }
+          }
+        ]
+      });
+      toast.present();
+    }else{
+      this.navCtrl.navigateRoot('/');
+    }
+  }
+
+  guardar() {
+    this.databaseService.save_settings();
+    this.navCtrl.navigateRoot('/');
   }
 
 }

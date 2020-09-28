@@ -7,6 +7,8 @@ from tensorflow import keras
 import sounddevice
 from sklearn.preprocessing import StandardScaler
 from joblib import dump, load
+from datetime import datetime
+import json
 
 duration = 0.1  # seconds
 sample_rate=44100
@@ -24,6 +26,16 @@ def extract_features():
     ext_features = np.hstack([mfccs,chroma,mel,contrast,tonnetz])
     features = np.vstack(ext_features)
     return features
+
+def store_time(date, final_time):
+    print(date, final_time)
+    data = []
+    with open('server/barks.json', 'r') as json_file:
+        data = json.load(json_file)
+    with open('server/barks.json', 'w') as json_file:
+        data.append({ 'duration': date, 'date': final_time })
+        print(data)
+        json.dump(data, json_file)
 
 # Create a new model instance
 try:
@@ -57,10 +69,19 @@ model.compile(optimizer=opt,
 
 # Load the previously saved weights
 model.load_weights("128x2-DNN.model")
+prev = False
 
 while 1:
         feat = extract_features()
         feat = sc.transform(feat)
         y_pred = model.predict_classes(feat)
-        
         print(y_pred)
+
+        if(np.bincount(y_pred).argmax() == 1 and not prev):
+            start_time = datetime.now()
+            prev = True
+        elif(np.bincount(y_pred).argmax() != 1 and prev):
+            end_time = datetime.now()
+            final_time = end_time - start_time
+            store_time(start_time.strftime('%Y-%m-%dT%H:%M:%S'), int(final_time.total_seconds()))
+            prev = False

@@ -27,6 +27,8 @@ def extract_features():
 
 # Create a new model instance
 features = np.load('features.npy')
+print(features.shape)
+exit()
 sc = StandardScaler()
 sc.fit(features)
 

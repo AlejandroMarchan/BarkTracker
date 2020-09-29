@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DatabaseService } from '../services/database.service';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-record',
@@ -32,7 +33,7 @@ export class RecordPage implements OnInit {
     'max_dur': null
   };
 
-  constructor(private databaseService: DatabaseService,private router: Router, private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private databaseService: DatabaseService,private router: Router, private http: HttpClient, private route: ActivatedRoute, private toastController: ToastController) {
     route.params.subscribe(params => {
       console.log('params', params);
       if(Object.keys(params).length != 0){
@@ -54,23 +55,52 @@ export class RecordPage implements OnInit {
         'Authorization': 'Basic ' + btoa(this.databaseService.data.server_user + ':' + this.databaseService.data.server_password)
       })
     };
-    this.http.get<any>('http://' + this.databaseService.data.ip + ':8333/barks.json', httpOptions).subscribe(data => {
-      console.log(data);
-      let prevDate: Date = null;
-      let newDay: boolean = false;
-      for(let elem of data.reverse()){
-        let fecha = new Date(elem.date);
-        if(prevDate && prevDate.getDate() != fecha.getDate()){
-          newDay = true;
-          console.log('newday');
+    this.http.get<any>('http://' + this.databaseService.data.ip + ':8333/barks.json', httpOptions).subscribe(
+      data => {
+        console.log(data);
+        let prevDate: Date = null;
+        let newDay: boolean = false;
+        for(let elem of data.reverse()){
+          let fecha = new Date(elem.date);
+          if(prevDate && prevDate.getDate() != fecha.getDate()){
+            newDay = true;
+            console.log('newday');
 
+          }
+          this.bark_data.push({'duration': elem.duration, 'date': fecha, 'newDay': newDay});
+          prevDate = fecha;
+          newDay = false;
         }
-        this.bark_data.push({'duration': elem.duration, 'date': fecha, 'newDay': newDay});
-        prevDate = fecha;
-        newDay = false;
-      }
-      console.log(this.bark_data);
-      this.filter();
+        console.log(this.bark_data);
+        this.filter();
+      },
+      async error => {
+        console.log(error);
+        if(error.status == '401'){
+          const toast = await this.toastController.create({
+            color: 'danger',
+            header: 'Error',
+            message: 'The server credentials are wrong please correct them',
+            duration: 5000
+          });
+          toast.present();
+        } else if(error.status == 0){
+          const toast = await this.toastController.create({
+            color: 'danger',
+            header: 'Error',
+            message: "The Raspberry's IP is wrong please check it again",
+            duration: 5000
+          });
+          toast.present();
+        } else{
+          const toast = await this.toastController.create({
+            color: 'danger',
+            header: 'Error',
+            message: error.statusText,
+            duration: 5000
+          });
+          toast.present();
+        }
     })
   }
 

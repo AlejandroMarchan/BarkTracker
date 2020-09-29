@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import { ToastController } from '@ionic/angular';
 import { DatabaseService } from '../services/database.service';
 
 const ICE_SERVERS: RTCIceServer[] = [
@@ -23,11 +24,18 @@ export class CameraPage {
   private url: string = '';
   private ws: WebSocket;
 
-  constructor (private datatabaseService: DatabaseService) {
+  constructor (private datatabaseService: DatabaseService, private toastController: ToastController) {
     this.url = 'wss://' + this.datatabaseService.data.camera_user + ':' + this.datatabaseService.data.camera_password + '@' + this.datatabaseService.data.ip + ':4200/stream/webrtc';
   }
 
   async hangup() {
+    const toast = await this.toastController.create({
+      color: 'danger',
+      message: 'Closing the connection.',
+      duration: 3000
+    });
+    toast.present();
+
     var request = {
       what: "hangup"
     };
@@ -54,13 +62,20 @@ export class CameraPage {
  
   }
 
-  websocketEvents() {
+  async websocketEvents() {
     console.log(this.url);
+    const toast = await this.toastController.create({
+      color: 'success',
+      message: 'Connecting to the camera, please wait.',
+      duration: 3000
+    });
+    toast.present();
+
     this.ws = new WebSocket(this.url);
  
     this.ws.onopen = () => {
         console.log("websocket open");
- 
+
         this.startCall();
  
     };

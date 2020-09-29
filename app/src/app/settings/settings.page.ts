@@ -49,6 +49,7 @@ export class SettingsPage implements OnInit {
           {
             text: 'Exit',
             handler: () => {
+              this.databaseService.get_settings();
               this.navCtrl.navigateRoot('/');
             }
           }, {

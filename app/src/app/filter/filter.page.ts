@@ -44,9 +44,12 @@ export class FilterPage implements OnInit {
 
   constructor(public toastController: ToastController, private router: Router, private route: ActivatedRoute) {
     route.params.subscribe(params => {
-      console.log(params);
       this.filters = JSON.parse(JSON.stringify(params));
       this.filters_copy = JSON.parse(JSON.stringify(params));
+      this.filters.min_dur = +this.filters.min_dur;
+      this.filters.max_dur = +this.filters.max_dur;
+      this.filters_copy.min_dur = +this.filters.min_dur;
+      this.filters_copy.max_dur = +this.filters.max_dur;
       console.log(this.filters);
     });
   }

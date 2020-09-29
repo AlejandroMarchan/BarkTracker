@@ -38,6 +38,8 @@ export class RecordPage implements OnInit {
       console.log('params', params);
       if(Object.keys(params).length != 0){
         this.filters = JSON.parse(JSON.stringify(params));
+        this.filters.min_dur = +this.filters.min_dur;
+        this.filters.max_dur = +this.filters.max_dur;
       }
       console.log(this.filters);
       this.getData();

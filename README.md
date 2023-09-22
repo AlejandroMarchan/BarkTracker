@@ -4,6 +4,8 @@
 
 This repository contains the code and resources for my Bachelor Thesis project, a low-cost dog monitoring system that detects barks using artificial intelligence. Developed to improve upon existing sound threshold-based systems, it aims to reduce false positive notifications and offer users real-time monitoring capabilities. The system is composed of two main components: the monitoring hardware setup built around a Raspberry Pi and a mobile application for real-time control and monitoring.
 
+[Read the full Bachelor Thesis...](https://github.com/AlejandroMarchan/BarkTracker/blob/master/Bachelor%20Thesis%20-%20Alejandro%20Marchan.pdf)
+
 ## Table of Contents
 
 - [Description](#description)
